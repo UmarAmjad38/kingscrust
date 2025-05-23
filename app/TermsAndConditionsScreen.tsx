@@ -86,7 +86,7 @@ export default function TermsAndConditionsScreen() {
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.pageTitleContainer}>
-            <Image source={require('../assets/images/th.jpeg')} style={styles.logoImage} />
+            <Image source={require('../assets/images/logo.png')} style={styles.logoImage} />
             <Text style={styles.pageTitle}>King's Crust Pizzeria Terms</Text>
             <Text style={styles.lastUpdated}>Last Updated: {formattedDate}</Text>
           </View>
@@ -130,7 +130,7 @@ export default function TermsAndConditionsScreen() {
 
           <Section title="6. Governing Law" iconName="gavel">
             <Text style={styles.paragraph}>
-                These terms are governed by the laws of [Your Country/State]. You agree to the exclusive jurisdiction of the courts in that location for any disputes.
+                These terms are governed by the laws of Government of Punjab. You agree to the exclusive jurisdiction of the courts in that location for any disputes.
             </Text>
           </Section>
         </ScrollView>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
-    paddingTop: Platform.OS === 'ios' ? 50 : 25,
+    paddingTop: 15,
     paddingBottom: 15,
     backgroundColor: CARD_BACKGROUND_COLOR,
     borderBottomWidth: 1,

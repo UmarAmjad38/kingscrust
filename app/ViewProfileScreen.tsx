@@ -82,7 +82,7 @@ export default function ViewProfileScreen() {
       <ScrollView contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.profileHeader}>
           <Image
-            source={require('../assets/images/th.jpeg')}
+            source={require('../assets/images/logo.png')}
             style={styles.profileImage}
           />
           {!isEditing && (

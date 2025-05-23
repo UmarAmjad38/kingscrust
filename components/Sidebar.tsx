@@ -10,6 +10,7 @@ import {
   Pressable,
   Platform,
   Dimensions,
+  Linking,
 } from "react-native";
 import {
   ChevronLeft,
@@ -32,15 +33,14 @@ interface SidebarProps {
   isLoggedIn: boolean;
   onLoginPress?: () => void;
   onLogoutPress?: () => void;
-  onContactPress?: () => void;
-  onOpenAddressSheet?: () => void; // Prop to open the address sheet
+  onOpenAddressSheet?: () => void;
 }
 
 const ICON_SIZE = 22;
 const ACTION_ICON_SIZE = 18;
 const ICON_COLOR = "#333";
 const BORDER_COLOR = "#e0e0e0";
-const PRIMARY_ACCENT_COLOR = "#fedc00"; // You might want to theme this
+const PRIMARY_ACCENT_COLOR = "#fedc00";
 const SECONDARY_TEXT_COLOR = "#666";
 const PRIMARY_TEXT_COLOR = "#222";
 const ACTION_BUTTON_TEXT_COLOR = "#333";
@@ -56,7 +56,6 @@ export const Sidebar = ({
   isLoggedIn,
   onLoginPress,
   onLogoutPress,
-  onContactPress,
   onOpenAddressSheet,
 }: SidebarProps) => {
   const slideAnim = useRef(new Animated.Value(initialTranslateX)).current;
@@ -89,6 +88,27 @@ export const Sidebar = ({
     setTimeout(() => {
         onOpenAddressSheet?.();
     }, 150);
+  };
+
+  const handleContactUsPress = () => {
+    const phoneNumber = "03240771561";
+    const whatsappFormattedNumber = `92${phoneNumber.substring(1)}`;
+    const defaultMessage = "Hello Kings Crust, I'm contacting you from your app regarding your pizza shop.";
+    const encodedMessage = encodeURIComponent(defaultMessage);
+    const whatsappUrl = `whatsapp://send?phone=${whatsappFormattedNumber}&text=${encodedMessage}`;
+
+    Linking.canOpenURL(whatsappUrl)
+      .then((supported) => {
+        if (supported) {
+          return Linking.openURL(whatsappUrl);
+        } else {
+          console.error("WhatsApp is not installed or the URL is not supported: " + whatsappUrl);
+          // Fallback, e.g., open a generic contact page or show an alert
+          // For simplicity, just logging an error here
+        }
+      })
+      .catch((err) => console.error('An error occurred opening WhatsApp', err));
+    onClose();
   };
 
   const loggedInMenuItems = [
@@ -136,7 +156,7 @@ export const Sidebar = ({
               {isLoggedIn ? (
                 <View style={styles.profileInfo}>
                   <Image
-                    source={require("../assets/images/th.jpeg")}
+                    source={require("../assets/images/logo.png")}
                     style={styles.profileImage}
                   />
                   <Text style={styles.profileName}>Umar</Text>
@@ -152,7 +172,7 @@ export const Sidebar = ({
               ) : (
                 <View style={styles.loginSection}>
                    <Image
-                    source={require("../assets/images/th.jpeg")}
+                    source={require("../assets/images/logo.png")}
                     style={styles.profileImage}
                   />
                    <Text style={styles.loginPromptText}>Log in for a personalized experience</Text>
@@ -191,7 +211,7 @@ export const Sidebar = ({
             <View style={styles.footer}>
               <TouchableOpacity
                 style={[styles.actionButton, styles.contactButton]}
-                onPress={onContactPress}
+                onPress={handleContactUsPress}
               >
                  <PhoneCall size={ACTION_ICON_SIZE} color={ACTION_BUTTON_TEXT_COLOR} style={styles.actionButtonIcon}/>
                  <Text style={styles.actionButtonText}>CONTACT US</Text>
